@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Add custom CSS styles for the animated text */
+    .animated-text {
+      animation: colorChange 5s linear infinite;
+    }
+
+    @keyframes colorChange {
+      0% {
+        color: rgb(255, 0, 0);
+      }
+
+      25% {
+        color: rgb(0, 255, 0);
+      }
+
+      50% {
+        color: rgb(0, 0, 255);
+      }
+
+      75% {
+        color: rgb(255, 255, 0);
+      }
+
+      100% {
+        color: rgb(0, 255, 255);
+      }
+    }
+
+    /* Add CSS for italic text */
+    .italic-text {
+      font-style: italic;
+      animation: colorChange 5s linear infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white rounded-lg shadow-md p-6 w-96">
+    <h1 class=" text-2xl lg:text-4xl font-bold mb-4">
+      <span class="animated-text">Scientific Calculator</span>
+    </h1>
+    <input type="text" id="result"
+      class="text-2xl font-bold mb-4 border border-gray-300 rounded-lg p-2 w-full text-right" readonly>
+    <div class="grid grid-cols-5 gap-2">
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('sin(')">sin</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('cos(')">cos</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('tan(')">tan</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="switchDegRad()">DegRad</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('sin-1(')">sin-1</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('cos-1(')">cos-1</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('tan-1(')">tan-1</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('Math.PI')">π</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('Math.E')">e</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('**')">xy</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('**3')">x3</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('**2')">x2</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('Math.exp(')">ex</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('10**')">10x</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('Math.sqrt(')">√x</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('**0.5')">y√x</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('**0.3333333333333333')">3√x</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('Math.log(')">log</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('(')">(</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult(')')">)</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('1/')">1/x</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('%')">%</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="factorial()">n!</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('7')">7</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('8')">8</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('9')">9</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('+')">+</button>
+      <button class="col-span-1 bg-red-300 text-red-700 font-semibold py-2 rounded-lg"
+        onclick="backspace()">&larr;</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('4')">4</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('5')">5</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('6')">6</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('-')">-</button>
+      <button class="col-span-1 bg-yellow-300 text-yellow-700 font-semibold py-2 rounded-lg"
+        onclick="answer()">Ans</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('1')">1</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('2')">2</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('3')">3</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('*')">×</button>
+      <button class="col-span-1 bg-green-300 text-green-700 font-semibold py-2 rounded-lg"
+        onclick="memoryAdd()">M+</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('0')">0</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('.')">.</button>
+      <button class="col-span-1 bg-blue-300 text-blue-700 font-semibold py-2 rounded-lg"
+        onclick="scientificNotation()">EXP</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="appendToResult('/')">÷</button>
+      <button class="col-span-1 bg-yellow-300 text-yellow-700 font-semibold py-2 rounded-lg"
+        onclick="memorySubtract()">M-</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="toggleSign()">±</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="randomNumber()">RND</button>
+      <button class="col-span-1 bg-red-300 text-red-700 font-semibold py-2 rounded-lg"
+        onclick="clearResult()">AC</button>
+      <button class="col-span-1 bg-yellow-300 text-yellow-700 font-semibold py-2 rounded-lg"
+        onclick="evaluateResult()">=</button>
+      <button class="col-span-1 bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+        onclick="memoryRecall()">MR</button>
+
+    </div>
+    <p class="italic-text text-center text-sm">make by shah israil</p>
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>
